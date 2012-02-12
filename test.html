@@ -39,24 +39,40 @@
 <script src="jquery.min.js"></script>
 <script src="jquery.outside.js"></script>
 <script>
+var api;
 $(function()
 {
+	/*
 	$('#inner li').outside({
 		callback: function(e)
 		{
 			console.log('OUTSIDE');
 			console.log(e);
 		},
-		once: false
+		once: false,
+		debug: true
 	});
-	/**/
-	$('#inner2 h2').outside('init', {
+		
+	api = $('#inner li').data('outside-api');
+	*/
+	
+	$('#inner li').outside(function(e)
+	{
+		console.log('OUTSIDE');
+		console.log(e);
+	});
+		
+	api = $('#inner li').data('outside-api');
+
+	/*
+	$('#inner2 h2').outside({
 		callback: function(e)
 		{
 			console.log('OUTSIDE 2');
 			console.log(e);
 		},
-		once: false
+		once: false,
+		debug: true
 	});
 	/**/
 //	$('#inner li').outside('destroy');

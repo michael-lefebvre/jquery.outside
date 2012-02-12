@@ -1,77 +1,112 @@
-// JavaScript Document
+/*!
+ * jQuery.outside - v0.1.0 - 2012-02-12
+ * https://github.com/michael-lefebvre/jquery.outside
+ *
+ * Copyright (c) 2012 Michael Lefebvre
+ * Dual licensed under the MIT and GPL licenses.
+ */
 
 (function( $ )
 {
-	var $object = null;
-	var fnCallback = null;
-	var defaults = {
-		'event'		: 'click',
-		'callback'	: null,
-		'once'		: true
-	};
-	
-	var methods = 
+	$.fn.outside = function(options)
 	{
-		settings: 'ok',
-		
-    	init : function( options) 
+		// onTheOutside "class" - public methods are available through $('selector').data('outside-api')
+		function onTheOutside($elem, settings)
 		{
-			methods.settings = $.extend({}, defaults, options);
-
-			if(typeof(methods.settings.callback) == 'function')
-			{				
-				$object	= this;
-
-				$(document).bind(methods.settings.event, methods.listener);
-			}
-
-			// maintain chainability
-			return this;
-		},
-		
-		listener: function(event)
-		{
-			var $target = $(event.target);
+			var out = this,
+				s	= settings;
 			
-			console.log($object);
-			console.log($target.is($object));
-			console.log($target.parents().index($object));
-			
-			if($target.is($object))
+			var listener = function(event)
 			{
-				return;
-			}
-			
-			if($target.parents().index($object) < 0)
-			{
-				methods.settings.callback(event);
-				if(methods.settings.once)
+				var $target = $(event.target);
+				
+				if(s.debug)
 				{
-					methods.destroy();
+					console.log($elem);
+					console.log($target.is($elem));
+					console.log($target.parents().index($elem));
+				}
+				
+				if($target.is($elem))
+				{
+					return;
+				}
+				
+				if($target.parents().index($elem) < 0)
+				{
+					s.callback(event);
+
+					if(s.once)
+					{
+						destroy();
+					}
+				}
+			};
+			
+			var destroy = function()
+			{
+				$(document).unbind(s.event, listener);
+			};
+			
+			var initialise = function(s)
+			{
+				if(typeof(s.callback) == 'function')
+				{
+					$(document).bind(s.event, listener);
 				}
 			}
-		},
+			
+			// Public API
+			$.extend(
+				out,
+				{
+					reinitialise: function(settings)
+					{
+						s = $.extend({}, defaults, settings);
+						initialise(s);
+					},
+					
+					destroy: function()
+					{
+						destroy();
+					}
+				}
+			);
+			
+			initialise(s);
+			
+		}
 		
-		destroy: function()
+		if(typeof(options) == 'function')
 		{
-			$(document).unbind(methods.settings.event, methods.listener);
+			var fn = options;
+			options = {
+				callback: fn
+			};
+			
+			delete fn;
 		}
-	};
-	
-	$.fn.outside = function(method, options)
-	{
-		// Method calling logic
-		if ( methods[method] )
+		
+		var defaults = 
+			{
+				'event'		: 'click',
+				'callback'	: null,
+				'once'		: true,
+				'debug'		: false
+			},
+			settings	= $.extend({}, defaults, options),
+			$elem		= this, 
+			api			= $elem.data('outside-api');
+			
+		if(api) 
 		{
-			return methods[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
-		}
-		else if ( typeof method === 'object' || ! method )
-		{
-			return methods.init.apply( this, arguments );
+			api.reinitialise(settings);
 		}
 		else
 		{
-			$.error( 'Method ' +  method + ' does not exist on jQuery.outside' );
-		} 
+			api = new onTheOutside($elem, settings);
+			$elem.data('outside-api', api);
+		}
+
 	};
 })( jQuery );
