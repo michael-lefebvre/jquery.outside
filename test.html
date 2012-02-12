@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Untitled Document</title>
+
+<style>
+#inner li {
+	background:#00F;
+	margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div style="width:250px; background:#f00; height:250px; text-align:center">
+	<div id="inner" style="width:150px; margin:10px auto; background:#0FF; height:150px; border:2px solid #000">
+    	<h2>test</h2>
+        
+        <ul>
+        	<li>el1</li>
+        	<li>el2</li>
+        </ul>
+    </div>
+</div>
+
+<div style="width:250px; background:#f00; height:250px; text-align:center">
+	<div id="inner2" style="width:150px; margin:10px auto; background:#0FF; height:150px; border:2px solid #000">
+    	<h2>test</h2>
+        
+        <ul>
+        	<li>el1</li>
+        	<li>el2</li>
+        </ul>
+    </div>
+</div>
+
+<script src="jquery.min.js"></script>
+<script src="jquery.outside.js"></script>
+<script>
+$(function()
+{
+	$('#inner li').outside({
+		callback: function(e)
+		{
+			console.log('OUTSIDE');
+			console.log(e);
+		},
+		once: false
+	});
+	/**/
+	$('#inner2 h2').outside('init', {
+		callback: function(e)
+		{
+			console.log('OUTSIDE 2');
+			console.log(e);
+		},
+		once: false
+	});
+	/**/
+//	$('#inner li').outside('destroy');
+});
+</script>
+</body>
+</html>
