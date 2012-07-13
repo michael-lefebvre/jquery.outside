@@ -35,11 +35,14 @@
 				
 				if($target.parents().index($elem) < 0)
 				{
-					s.callback(event);
-
-					if(s.once)
+					if(typeof(s.callback) == 'function')
 					{
-						destroy();
+						s.callback(event);
+
+						if(s.once)
+						{
+							destroy();
+						}
 					}
 				}
 			};
@@ -93,7 +96,7 @@
 				'event'		: 'click',
 				'callback'	: null,
 				'once'		: true,
-				'debug'		: false
+				'debug'		: false,
 				'outside'	: $(document)
 			},
 			settings	= $.extend({}, defaults, options),

@@ -63,23 +63,23 @@ $(function()
 			console.log(e);
 		},
 		once: false,
-		debug: true
+		debug: true,
+		outside: $('#inner'),
+		event: 'mouseleave'
 	});
 		
 	api = $('#inner li').data('outside-api');
 
-	/*
-	$('#inner2 h2').outside({
-		callback: function(e)
-		{
-			console.log('OUTSIDE 2');
-			console.log(e);
-		},
-		once: false,
-		debug: true
-	});
-	/**/
-//	$('#inner li').outside('destroy');
+	// $('#inner2 h2').outside({
+	// 	callback: function(e)
+	// 	{
+	// 		console.log('OUTSIDE #inner2 h2');
+	// 		console.log(e);
+	// 	},
+	// 	debug: true
+	// });
+
+	// $('#inner li').outside('destroy');
 });
 </script>
 </body>
