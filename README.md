@@ -2,6 +2,23 @@
 
 a simple designed api to detect a event outside an element, then trigger a callback
 
+## Examples
+
+	$('#inner li').outside(function(e) {
+		console.log('OUTSIDE');
+		console.log(e);
+	});
+
+
+	$('#inner li').outside({
+		callback: function(e) {
+			console.log('OUTSIDE');
+			console.log(e);
+		},
+		once: false
+	});
+
+
 ## Defaults settings
 
 	{
@@ -31,20 +48,3 @@ Public methods are available through
 
 * __reinitialise__: reset settings
 * __destroy__: unbind event
-
-## Examples
-
-	$('#inner li').outside(function(e) {
-		console.log('OUTSIDE');
-		console.log(e);
-	});
-
-
-	$('#inner li').outside({
-		callback: function(e) {
-			console.log('OUTSIDE');
-			console.log(e);
-		},
-		once: false
-	});
-
