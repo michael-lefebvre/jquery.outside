@@ -19,8 +19,8 @@
     	<h2>test</h2>
         
         <ul>
-        	<li>el1</li>
-        	<li>el2</li>
+        	<li id="elem1">el1</li>
+        	<li id="elem2">el2</li>
         </ul>
     </div>
 </div>
@@ -56,10 +56,14 @@ $(function()
 	api = $('#inner li').data('outside-api');
 	*/
 	
-	$('#inner li').outside(function(e)
-	{
-		console.log('OUTSIDE');
-		console.log(e);
+	$('#elem1').add('#elem2').outside({
+		callback: function(e)
+		{
+			console.log('OUTSIDE 2');
+			console.log(e);
+		},
+		once: false,
+		debug: true
 	});
 		
 	api = $('#inner li').data('outside-api');

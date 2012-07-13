@@ -22,6 +22,7 @@
 				
 				if(s.debug)
 				{
+					console.log($target);
 					console.log($elem);
 					console.log($target.is($elem));
 					console.log($target.parents().index($elem));
@@ -45,14 +46,14 @@
 			
 			var destroy = function()
 			{
-				$(document).unbind(s.event, listener);
+				s.outside.unbind(s.event, listener);
 			};
 			
 			var initialise = function(s)
 			{
 				if(typeof(s.callback) == 'function')
 				{
-					$(document).bind(s.event, listener);
+					s.outside.bind(s.event, listener);
 				}
 			}
 			
@@ -93,6 +94,7 @@
 				'callback'	: null,
 				'once'		: true,
 				'debug'		: false
+				'outside'	: $(document)
 			},
 			settings	= $.extend({}, defaults, options),
 			$elem		= this, 
