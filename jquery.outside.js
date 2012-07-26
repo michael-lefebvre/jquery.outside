@@ -1,5 +1,5 @@
 /*!
- * jQuery.outside - v0.1.0 - 2012-02-12
+ * jQuery.outside - v0.3.0 - 2012-07-26
  * https://github.com/michael-lefebvre/jquery.outside
  *
  * Copyright (c) 2012 Michael Lefebvre
@@ -27,7 +27,7 @@
 					{
 						console.log('is $elem');
 					}
-					
+
 					return;
 				}
 
