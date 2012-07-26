@@ -13,27 +13,34 @@
 		// onTheOutside "class" - public methods are available through $('selector').data('outside-api')
 		function onTheOutside($elem, settings)
 		{
-			var out = this,
-				s	= settings;
+			var out     = this,
+				s	    = settings,
+				trigger = true;
 			
 			var listener = function(event)
 			{
 				var $target = $(event.target);
 				
-				if(s.debug)
-				{
-					console.log($target);
-					console.log($elem);
-					console.log($target.is($elem));
-					console.log($target.parents().index($elem));
-				}
-				
 				if($target.is($elem))
 				{
+					if(s.debug)
+					{
+						console.log('is $elem');
+					}
+					
 					return;
 				}
-				
-				if($target.parents().index($elem) < 0)
+
+				$elem.each(function()
+				{
+					if($target.parents().index(this) > 0)
+					{
+						trigger = false;
+						return false; // break loop
+					}
+				});				
+
+				if(trigger)
 				{
 					if(typeof(s.callback) == 'function')
 					{
@@ -45,6 +52,18 @@
 						}
 					}
 				}
+
+				
+				if(s.debug)
+				{
+					console.log($target);
+					console.log($elem);
+					console.log($target.is($elem));
+					// console.log($target.parents().index($elem));
+					// console.log($.contains($target, $elem))
+					console.log("trigger: %b", trigger)
+				}
+				trigger = true;
 			};
 			
 			var destroy = function()

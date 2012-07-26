@@ -20,7 +20,7 @@
         
         <ul>
         	<li id="elem1">el1</li>
-        	<li id="elem2">el2</li>
+        	<li id="elem2"><strong><span>el2</span></strong></li>
         </ul>
     </div>
 </div>
@@ -64,8 +64,8 @@ $(function()
 		},
 		once: false,
 		debug: true,
-		outside: $('#inner'),
-		event: 'mouseleave'
+		// outside: $('#inner'),
+		// event: 'mouseleave'
 	});
 		
 	api = $('#inner li').data('outside-api');
